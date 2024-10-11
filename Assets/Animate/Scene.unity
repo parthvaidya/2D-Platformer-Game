@@ -434,7 +434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af87564c3d1e00409cd1549b4ab55d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 1751292486}
+  playerAnimator: {fileID: 1751292486}
+  boxCol: {fileID: 1751292484}
 --- !u!95 &1751292486 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 7403193974885477311, guid: 731a3c0e5bbd44d48b3e6521c9899f8f,
