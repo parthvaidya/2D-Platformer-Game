@@ -1,46 +1,77 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Animator playerAnimator;
-    [SerializeField] private BoxCollider2D boxCol;
+    public float speed;
+    public float jumpForce = 7f; // Adjust jump force as needed
+    public bool isGrounded;
+    //Take a reference from inspector.
+   
 
-    //Collider Variables
-    private Vector2 boxColInitSize;
-    private Vector2 boxColInitOffset;
+   
 
-    private void Start()
+    public void Update()
     {
-        //Fetching initial collider properties
-        boxColInitSize = boxCol.size;
-        boxColInitOffset = boxCol.offset;
-    }
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        MoveCharacter(horizontal);
+        PlayMovementAnimation(horizontal);
 
-    public void Crouch(bool crouch)
-    {
-        if (crouch == true)
+        // Jump logic
+        if (Input.GetKeyDown(KeyCode.Space) )
         {
-            float offX = -0.0978f;     //Offset X
-            float offY = 0.5947f;      //Offset Y
-
-            float sizeX = 0.6988f;     //Size X
-            float sizeY = 1.3398f;     //Size Y
-
-            boxCol.size = new Vector2(sizeX, sizeY);   //Setting the size of collider
-            boxCol.offset = new Vector2(offX, offY);   //Setting the offset of collider
+            Jump();
         }
 
-        else
-        {
-            //Reset collider to initial values
-            boxCol.size = boxColInitSize;
-            boxCol.offset = boxColInitOffset;
-        }
 
-        //Play Crouch animation
-        playerAnimator.SetBool("Crouch", crouch);
     }
+
+    private void MoveCharacter(float horizontal)
+    {
+        Vector3 position = transform.position;
+        position.x = position.x + horizontal * speed * Time.deltaTime;
+        transform.position = position;
+
+    }
+
+    private void PlayMovementAnimation(float horizontal)
+    {
+        playerAnimator.SetFloat("Speed", Mathf.Abs(horizontal));
+
+
+        //Flipping the player
+
+        Vector3 scale = transform.localScale;
+        if (horizontal < 0)
+        {
+            scale.x = -1f * Mathf.Abs(scale.x);
+        }
+        else if (horizontal > 0)
+        {
+            scale.x = Mathf.Abs(scale.x);
+        }
+        transform.localScale = scale;
+
+        Input.GetAxisRaw("Vertical");
+        Input.GetKeyDown(KeyCode.Space);
+    }
+
+    private void Jump()
+    {
+        // Trigger the jump animation
+        playerAnimator.SetBool("Jump", true);
+
+       
+
+        
+        isGrounded = false;
+
+        
+    }
+
+    
+
+
 }
