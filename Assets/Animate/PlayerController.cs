@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public float jump;
 
     private Rigidbody2D rb2d;
+
+    public ScoreController scoreController;
 
     //Take a reference from inspector.
 
@@ -74,8 +77,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-   
-    
-
-
+    public void pickUpKey()
+    {
+        Debug.Log("Key is pickedup");
+        scoreController.IncreaseScore(10);
+    }
 }
