@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -81,5 +82,14 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Key is pickedup");
         scoreController.IncreaseScore(10);
+    }
+
+    public void KillPlayer()
+    {
+        Debug.Log("Player died!!");
+        // Reload the current scene when the player falls into the death zone
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        
+
     }
 }
