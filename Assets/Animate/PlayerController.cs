@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     public ScoreController scoreController;
     public HealthController healthController;
 
+    public GameOverController gameOverController;
+
     //Take a reference from inspector.
 
     private void Awake()

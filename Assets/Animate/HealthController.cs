@@ -10,6 +10,8 @@ public class HealthController : MonoBehaviour
     private int maxHealth = 3;
     private int currentHealth;
 
+    public GameOverController gameOverController;
+
     private void Awake()
     {
         healthText = GetComponent<TextMeshProUGUI>(); // Get the TextMeshProUGUI component
@@ -39,7 +41,8 @@ public class HealthController : MonoBehaviour
     private void PlayerDies()
     {
         Debug.Log("Player died! Reloading scene...");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene when the player dies
+        gameOverController.ShowGameOver(); // Show the Game Over UI
+        gameObject.SetActive(false);
     }
 
     private void RefreshUI()
