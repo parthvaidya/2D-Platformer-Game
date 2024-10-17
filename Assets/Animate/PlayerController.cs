@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb2d;
 
     public ScoreController scoreController;
+    public HealthController healthController;
 
     //Take a reference from inspector.
 
@@ -86,10 +87,16 @@ public class PlayerController : MonoBehaviour
 
     public void KillPlayer()
     {
-        Debug.Log("Player died!!");
-        // Reload the current scene when the player falls into the death zone
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        
+        Debug.Log("Player hit by enemy! Reducing health.");
+
+        if (healthController != null)
+        {
+            healthController.TakeDamage(1); // Reduce health by 1
+        }
+        else
+        {
+            Debug.LogError("HealthController reference is missing in PlayerController.");
+        }
 
     }
 }
