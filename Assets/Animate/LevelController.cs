@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class LevelController : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PlayerController>() != null) {
             Debug.Log("Level finished");
+            //LevelManager.instance.CompleteLevel(SceneManager.GetActiveScene().buildIndex);
             SceneController.instance.nextLevel();
         }
     }
