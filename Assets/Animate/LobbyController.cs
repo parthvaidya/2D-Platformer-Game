@@ -15,7 +15,7 @@ public class LobbyController : MonoBehaviour
     // This method will be called when the Quit button is clicked
     public void QuitGame()
     {
-        // Load Scene 2 (index 2 in the Build Settings)
-        SceneManager.LoadScene(2);
+        // Load Scene 3 (index 3 in the Build Settings)
+        SceneManager.LoadScene(3);
     }
 }
