@@ -10,6 +10,7 @@ public class LevelController : MonoBehaviour
         if (collision.gameObject.GetComponent<PlayerController>() != null) {
             Debug.Log("Level finished");
             UnlockNewLevel();
+            SoundController.Instance.Play(Sounds.ButtonClick);
             SceneController.instance.nextLevel();
         }
     }

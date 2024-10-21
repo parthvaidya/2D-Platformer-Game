@@ -8,6 +8,8 @@ public class LobbyController : MonoBehaviour
     // This method will be called when the Play button is clicked
     public void PlayGame()
     {
+
+        SoundController.Instance.Play(Sounds.ButtonClick);
         // Load Scene 1 (index 1 in the Build Settings)
         SceneManager.LoadScene(1);
     }

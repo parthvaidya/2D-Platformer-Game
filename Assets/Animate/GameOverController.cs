@@ -24,6 +24,7 @@ public class GameOverController : MonoBehaviour
 
     public void ShowGameOver()
     {
+        SoundController.Instance.PlayMusic(Sounds.PlayerDeath);
         gameOverUI.SetActive(true); // Show Game Over UI
         
     }

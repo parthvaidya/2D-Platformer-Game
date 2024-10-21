@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-   
+    public ParticleSystem bombBlast;
 
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -13,7 +13,8 @@ public class EnemyController : MonoBehaviour
         {
             PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
             playerController.KillPlayer();
-            
+            SoundController.Instance.Play(Sounds.BombBlast);
+            bombBlast.Play();
         }
     }
 
