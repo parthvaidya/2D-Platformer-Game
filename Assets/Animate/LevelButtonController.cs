@@ -7,38 +7,90 @@ using UnityEngine.UI;
 public class LevelButtonController : MonoBehaviour
 {
 
-    public Button[] button;
+    [SerializeField] private Button[] levelButtons; // Array of buttons for each level
 
-    private void Awake()
+    private void Start()
     {
-        // Ensure you are using the same key name
-        int levelAt = PlayerPrefs.GetInt("levelAt", 1);
-
-        for (int i = 0; i < button.Length; i++)
+        if (levelButtons == null || levelButtons.Length == 0)
         {
-            button[i].interactable = false;
-
+            Debug.LogError("Level buttons array is not set or empty.");
+            return;
         }
 
-        for (int i = 0; i < levelAt; i++)
+        // Ensure LevelManager singleton is initialized
+        if (LevelManager.Instance == null)
         {
-            button[i].interactable = true;
-
+            Debug.LogError("LevelManager instance is not found!");
+            return;
         }
 
+        // Loop through each button and set its interactable status based on level unlock status
+        for (int i = 0; i < levelButtons.Length; i++)
+        {
+            string levelName = "Level" + (i + 1);  // Level names starting from Level1
+            LevelStatus status = LevelManager.Instance.GetLevelStatus(levelName);
 
-    }
-    // Method for loading Level 1 (build index 1)
-    public void LoadLevel1()
-    {
-        SoundController.Instance.Play(Sounds.ButtonClick);
-        SceneManager.LoadScene(1); // Load Level 1 (build index 1)
+            // Log the level status for debugging purposes
+            Debug.Log($"Level {i + 1} status: {status}");
+
+            // Set interactable if unlocked or completed, else disable
+            levelButtons[i].interactable = (status == LevelStatus.Unlocked || status == LevelStatus.Completed);
+
+            // Capture the index for use in button click
+            int levelIndex = i + 1;  // Build index starting from 1
+            levelButtons[i].onClick.AddListener(() => LoadLevel(levelIndex)); // Assign listener for each button
+        }
     }
 
-    // Method for loading Level 2 (build index 2)
-    public void LoadLevel2()
+    // Method to load a level by index, starting from build index 1
+    public void LoadLevel(int levelIndex)
     {
+        string levelName = "Level" + levelIndex;
         SoundController.Instance.Play(Sounds.ButtonClick);
-        SceneManager.LoadScene(2); // Load Level 2 (build index 2)
+
+        // Check if the level is unlocked or completed
+        LevelStatus status = LevelManager.Instance.GetLevelStatus(levelName);
+        if (status == LevelStatus.Unlocked || status == LevelStatus.Completed)
+        {
+            SceneManager.LoadScene(levelIndex); // Load the level by index (build index starts from 1)
+        }
+        else
+        {
+            Debug.Log("This level is locked.");
+        }
     }
+
+
+
+    //// Method for loading Level 1 (build index 1)
+    //public void LoadLevel1()
+    //{
+    //    SoundController.Instance.Play(Sounds.ButtonClick);
+    //    SceneManager.LoadScene(1); // Load Level 1 (build index 1)
+    //}
+
+    //// Method for loading Level 2 (build index 2)
+    //public void LoadLevel2()
+    //{
+    //    SoundController.Instance.Play(Sounds.ButtonClick);
+    //    SceneManager.LoadScene(2); // Load Level 2 (build index 2)
+    //}
+
+    //public void LoadLevel3()
+    //{
+    //    SoundController.Instance.Play(Sounds.ButtonClick);
+    //    SceneManager.LoadScene(3);
+    //}
+
+    //public void LoadLevel4()
+    //{
+    //    SoundController.Instance.Play(Sounds.ButtonClick);
+    //    SceneManager.LoadScene(4);
+    //}
+
+    //public void LoadLevel5()
+    //{
+    //    SoundController.Instance.Play(Sounds.ButtonClick);
+    //    SceneManager.LoadScene(5);
+    //}
 }

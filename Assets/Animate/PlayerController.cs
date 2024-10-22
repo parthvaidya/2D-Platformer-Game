@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public HealthController healthController;
 
     public GameOverController gameOverController;
+    private bool isCrouching;
 
     //Take a reference from inspector.
 
@@ -30,10 +31,17 @@ public class PlayerController : MonoBehaviour
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Jump");
-        MoveCharacter(horizontal , vertical);
-        PlayMovementAnimation(horizontal , vertical);
+        bool crouch = Input.GetKey(KeyCode.LeftControl); // Check for crouch key (Ctrl)
 
-       
+        // If the player is crouching, they cannot jump or move horizontally
+        if (!crouch)
+        {
+            MoveCharacter(horizontal, vertical);
+        }
+
+        PlayMovementAnimation(horizontal, vertical, crouch);
+
+
 
 
     }
@@ -51,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void PlayMovementAnimation(float horizontal , float vertical)
+    private void PlayMovementAnimation(float horizontal , float vertical, bool crouch)
     {
         playerAnimator.SetFloat("Speed", Mathf.Abs(horizontal));
 
@@ -79,12 +87,25 @@ public class PlayerController : MonoBehaviour
         {
             playerAnimator.SetBool("Jump", false);
         }
+
+        // Handle crouch animation
+        if (crouch)
+        {
+            isCrouching = true;
+            playerAnimator.SetBool("Crouch", true);
+        }
+        else
+        {
+            isCrouching = false;
+            playerAnimator.SetBool("Crouch", false);
+        }
     }
 
     public void pickUpKey()
     {
         Debug.Log("Key is pickedup");
-        scoreController.IncreaseScore(10);
+        ScoreController.Instance.IncreaseScore(10);
+        //scoreController.IncreaseScore(10);
     }
 
     public void KillPlayer()

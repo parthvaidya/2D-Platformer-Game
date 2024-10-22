@@ -5,6 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class LobbyController : MonoBehaviour
 {
+    public void Start()
+    {
+        ResetPlayerData();
+    }
+    public void ResetPlayerData()
+    {
+        PlayerPrefs.DeleteKey("PlayerScore");
+        PlayerPrefs.DeleteKey("PlayerHealth");
+        PlayerPrefs.Save();
+    }
     // This method will be called when the Play button is clicked
     public void PlayGame()
     {
