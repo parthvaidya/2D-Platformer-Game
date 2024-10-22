@@ -8,6 +8,7 @@ public class LobbyController : MonoBehaviour
     public void Start()
     {
         ResetPlayerData();
+        //LevelManager.Instance.ResetPlayerData();
     }
     public void ResetPlayerData()
     {

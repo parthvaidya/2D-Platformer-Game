@@ -44,6 +44,16 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.Save();  // Ensure the status is saved
     }
 
+    public void ResetPlayerData()
+    {
+        // Delete keys for all levels to reset their status
+        for (int i = 1; i <= 5; i++) // Assuming you have 5 levels
+        {
+            PlayerPrefs.DeleteKey("Level" + i); // Delete the key for each level
+        }
+
+        PlayerPrefs.Save(); // Ensure changes are saved
+    }
     public void SetCurrentLevelComplete()
     {
         // Mark the current level as Completed
