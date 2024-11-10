@@ -18,10 +18,6 @@ public class PlayerController : MonoBehaviour
 
     public GameOverController gameOverController;
     private bool isCrouching;
-    private bool isGrounded;
-    private bool isJumping;
-    private float jumpTimeCounter;
-    public float maxJumpTime = 0.5f; 
 
     //Take a reference from inspector.
 
@@ -36,13 +32,13 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Jump");
         bool crouch = Input.GetKey(KeyCode.LeftControl); // Check for crouch key (Ctrl)
-        isGrounded = Mathf.Abs(rb2d.velocity.y) < 0.1f;
+
         // If the player is crouching, they cannot jump or move horizontally
         if (!crouch)
         {
             MoveCharacter(horizontal, vertical);
         }
-        HandleJump();
+
         PlayMovementAnimation(horizontal, vertical, crouch);
 
 
@@ -56,54 +52,11 @@ public class PlayerController : MonoBehaviour
         position.x = position.x + horizontal * speed * Time.deltaTime;
         transform.position = position;
 
-        //if (vertical > 0)
-        //{
-        //    rb2d.AddForce(new Vector2(0f, jump), ForceMode2D.Impulse);
-        //}
-
-        //if (Input.GetButtonDown("Jump") && isGrounded)
-        //{
-        //    rb2d.AddForce(new Vector2(0f, jump), ForceMode2D.Impulse);
-        //}
-
-    }
-
-    private void HandleJump()
-    {
-        // Start jump if player is grounded and jump button is pressed
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (vertical > 0)
         {
-            isJumping = true;
-            jumpTimeCounter = maxJumpTime;
-            rb2d.velocity = new Vector2(rb2d.velocity.x, jump); // Apply jump force
-            playerAnimator.SetBool("Jump", true); // Trigger jump animation
+            rb2d.AddForce(new Vector2(0f, jump), ForceMode2D.Impulse);
         }
 
-        // If holding jump button and within max jump time, allow continued jump
-        if (Input.GetButton("Jump") && isJumping)
-        {
-            if (jumpTimeCounter > 0)
-            {
-                rb2d.velocity = new Vector2(rb2d.velocity.x, jump);
-                jumpTimeCounter -= Time.deltaTime;
-            }
-            else
-            {
-                isJumping = false;
-            }
-        }
-
-        // End jump if jump button is released
-        if (Input.GetButtonUp("Jump"))
-        {
-            isJumping = false;
-        }
-
-        // Reset jump animation when grounded
-        if (isGrounded && !isJumping)
-        {
-            playerAnimator.SetBool("Jump", false);
-        }
     }
 
     private void PlayMovementAnimation(float horizontal , float vertical, bool crouch)
@@ -124,18 +77,16 @@ public class PlayerController : MonoBehaviour
         }
         transform.localScale = scale;
 
+        
 
-
-        //if (vertical >0 )
-        //{
-        //    playerAnimator.SetBool("Jump", true);
-        //}
-        //else
-        //{
-        //    playerAnimator.SetBool("Jump", false);
-        //}
-
-        playerAnimator.SetBool("Jump", !isGrounded);
+        if (vertical >0 )
+        {
+            playerAnimator.SetBool("Jump", true);
+        }
+        else
+        {
+            playerAnimator.SetBool("Jump", false);
+        }
 
         // Handle crouch animation
         if (crouch)
