@@ -6314,7 +6314,7 @@ GameObject:
   - component: {fileID: 1245773825}
   m_Layer: 0
   m_Name: GroundTileMap
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13086,12 +13086,12 @@ PrefabInstance:
     - target: {fileID: 2914634761343525767, guid: 731a3c0e5bbd44d48b3e6521c9899f8f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.72
+      value: -0.65
       objectReference: {fileID: 0}
     - target: {fileID: 2914634761343525767, guid: 731a3c0e5bbd44d48b3e6521c9899f8f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.27
+      value: -0.41
       objectReference: {fileID: 0}
     - target: {fileID: 2914634761343525767, guid: 731a3c0e5bbd44d48b3e6521c9899f8f,
         type: 3}
