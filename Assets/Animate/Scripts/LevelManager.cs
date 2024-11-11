@@ -25,7 +25,7 @@ public class LevelManager : MonoBehaviour
     {
         // Log LevelManager initialization
         Debug.Log("LevelManager initialized!");
-
+        Time.timeScale = 1f;
         // Initialize Level 1 as Unlocked
         if (GetLevelStatus("Level1") == LevelStatus.Locked)
         {

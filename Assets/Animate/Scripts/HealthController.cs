@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class HealthController : MonoBehaviour
 {
-    private static HealthController instance;
-    public static HealthController Instance { get { return instance; } }
+    
 
     private TextMeshProUGUI healthText;
     private int maxHealth = 3;
@@ -18,18 +17,10 @@ public class HealthController : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject); // Keep this object across scenes
-            LoadHealth(); // Load health from PlayerPrefs
-        }
-        else
-        {
-            Destroy(gameObject); // Destroy duplicate
-        }
+        
 
         healthText = GetComponent<TextMeshProUGUI>();
+        LoadHealth();
     }
 
     private void Start()
@@ -82,47 +73,5 @@ public class HealthController : MonoBehaviour
         PlayerPrefs.DeleteKey("PlayerHealth");
         PlayerPrefs.Save();
     }
-    //private TextMeshProUGUI healthText;
-    //private int maxHealth = 3;
-    //private int currentHealth;
-
-    //public GameOverController gameOverController;
-
-    //private void Awake()
-    //{
-    //    healthText = GetComponent<TextMeshProUGUI>(); // Get the TextMeshProUGUI component
-    //}
-
-    //private void Start()
-    //{
-    //    currentHealth = maxHealth; // Initialize the player's health to maxHealth
-    //    RefreshUI();
-    //}
-
-    //// Call this method to reduce the player's health
-    //public void TakeDamage(int damage)
-    //{
-    //    currentHealth -= damage; // Decrease health by damage amount
-
-    //    if (currentHealth <= 0)
-    //    {
-    //        PlayerDies();
-    //    }
-    //    else
-    //    {
-    //        RefreshUI(); // Update the health display if the player is still alive
-    //    }
-    //}
-
-    //private void PlayerDies()
-    //{
-    //    Debug.Log("Player died! Reloading scene...");
-    //    gameOverController.ShowGameOver(); // Show the Game Over UI
-    //    gameObject.SetActive(false);
-    //}
-
-    //private void RefreshUI()
-    //{
-    //    healthText.text = "Health: " + currentHealth; // Update the health text
-    //}
+   
 }

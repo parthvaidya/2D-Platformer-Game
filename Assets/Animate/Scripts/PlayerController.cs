@@ -8,8 +8,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Animator playerAnimator;
 
-    public float speed;
-    public float jump;
+    [SerializeField] private float speed;
+    [SerializeField] private float jump;
 
     private Rigidbody2D rb2d;
 
@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     public GameOverController gameOverController;
     private bool isCrouching;
 
-    //Take a reference from inspector.
+    
 
     private void Awake()
     {

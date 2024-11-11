@@ -7,10 +7,10 @@ using UnityEngine.UI;
 
 public class GameOverController : MonoBehaviour
 {
-    public GameObject gameOverUI; // The Game Over UI panel
-    public Button restartButton; // Reference to the restart button
-    public Button lobby;
-    public TextMeshProUGUI scoreText; // Optional: display score on Game Over screen
+    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private Button restartButton; // Reference to the restart button
+    [SerializeField] private Button lobby;
+    [SerializeField] private TextMeshProUGUI scoreText; // Optional: display score on Game Over screen
 
     private void Start()
     {
@@ -26,17 +26,18 @@ public class GameOverController : MonoBehaviour
     {
         SoundController.Instance.PlayMusic(Sounds.PlayerDeath);
         gameOverUI.SetActive(true); // Show Game Over UI
-        
+        Time.timeScale = 0f;
     }
 
     private void RestartGame()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene
     }
 
     private void Lobby()
     {
-
+        Time.timeScale = 1f;
         SceneManager.LoadScene(0, LoadSceneMode.Single); //reload lobby
         
     }
