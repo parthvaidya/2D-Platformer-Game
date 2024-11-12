@@ -18,8 +18,10 @@ public class PlayerController : MonoBehaviour
 
     public GameOverController gameOverController;
     private bool isCrouching;
+    private bool jumpKeyHeld = false;
+    [SerializeField] private int maxJumps = 2; // Maximum jumps allowed (set to 1 for single jump, 2 for double jump)
+    private int jumpCounter;
 
-    
 
     private void Awake()
     {
