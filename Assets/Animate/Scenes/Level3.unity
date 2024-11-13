@@ -1720,9 +1720,9 @@ GameObject:
   - component: {fileID: 1245773824}
   - component: {fileID: 1245773823}
   - component: {fileID: 1245773825}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GroundTileMap
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3253,10 +3253,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAnimator: {fileID: 1751292486}
   speed: 5
-  jump: 2
+  jump: 50
   scoreController: {fileID: 625562598}
   healthController: {fileID: 1584568257}
   gameOverController: {fileID: 1314853576}
+  maxJumps: 2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!4 &1751292492 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2914634761343525767, guid: 731a3c0e5bbd44d48b3e6521c9899f8f,

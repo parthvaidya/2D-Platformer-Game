@@ -18,16 +18,18 @@ public class PlayerController : MonoBehaviour
 
     public GameOverController gameOverController;
     private bool isCrouching;
+    private bool isGrounded;
     private bool jumpKeyHeld = false;
     [SerializeField] private int maxJumps = 2; // Maximum jumps allowed (set to 1 for single jump, 2 for double jump)
     private int jumpCounter;
+    [SerializeField] private LayerMask groundLayer;
+
 
 
     private void Awake()
     {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
     }
-
 
     public void Update()
     {
@@ -42,32 +44,32 @@ public class PlayerController : MonoBehaviour
         }
 
         PlayMovementAnimation(horizontal, vertical, crouch);
-
-
-
-
     }
 
-    private void MoveCharacter(float horizontal , float vertical)
+    private void MoveCharacter(float horizontal, float vertical)
     {
         Vector3 position = transform.position;
         position.x = position.x + horizontal * speed * Time.deltaTime;
         transform.position = position;
 
-        if (vertical > 0)
+        // Check if player is grounded before allowing jump
+        if (vertical > 0 && isGrounded)
         {
             rb2d.AddForce(new Vector2(0f, jump), ForceMode2D.Impulse);
+            jumpCounter = 0;  // Reset jump counter when grounded
         }
-
+        else if (vertical > 0 && jumpCounter < maxJumps)
+        {
+            rb2d.AddForce(new Vector2(0f, jump), ForceMode2D.Impulse);
+            jumpCounter++; // Increment jump counter on second jump
+        }
     }
 
-    private void PlayMovementAnimation(float horizontal , float vertical, bool crouch)
+    private void PlayMovementAnimation(float horizontal, float vertical, bool crouch)
     {
         playerAnimator.SetFloat("Speed", Mathf.Abs(horizontal));
 
-
-        //Flipping the player
-
+        // Flipping the player
         Vector3 scale = transform.localScale;
         if (horizontal < 0)
         {
@@ -79,9 +81,7 @@ public class PlayerController : MonoBehaviour
         }
         transform.localScale = scale;
 
-        
-
-        if (vertical >0 )
+        if (vertical > 0)
         {
             playerAnimator.SetBool("Jump", true);
         }
@@ -102,6 +102,99 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool("Crouch", false);
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Check if the player is touching the ground (or platform)
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+            jumpCounter = 0; // Reset the jump counter when touching the ground
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        // Check if the player is no longer touching the ground
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
+    }
+
+    //public void Update()
+    //{
+    //    float horizontal = Input.GetAxisRaw("Horizontal");
+    //    float vertical = Input.GetAxisRaw("Jump");
+    //    bool crouch = Input.GetKey(KeyCode.LeftControl); // Check for crouch key (Ctrl)
+
+    //    // If the player is crouching, they cannot jump or move horizontally
+    //    if (!crouch)
+    //    {
+    //        MoveCharacter(horizontal, vertical);
+    //    }
+
+    //    PlayMovementAnimation(horizontal, vertical, crouch);
+
+
+
+
+    //}
+
+    //private void MoveCharacter(float horizontal , float vertical)
+    //{
+    //    Vector3 position = transform.position;
+    //    position.x = position.x + horizontal * speed * Time.deltaTime;
+    //    transform.position = position;
+
+    //    if (vertical > 0)
+    //    {
+    //        rb2d.AddForce(new Vector2(0f, jump), ForceMode2D.Impulse);
+    //    }
+
+    //}
+
+    //private void PlayMovementAnimation(float horizontal , float vertical, bool crouch)
+    //{
+    //    playerAnimator.SetFloat("Speed", Mathf.Abs(horizontal));
+
+
+    //    //Flipping the player
+
+    //    Vector3 scale = transform.localScale;
+    //    if (horizontal < 0)
+    //    {
+    //        scale.x = -1f * Mathf.Abs(scale.x);
+    //    }
+    //    else if (horizontal > 0)
+    //    {
+    //        scale.x = Mathf.Abs(scale.x);
+    //    }
+    //    transform.localScale = scale;
+
+
+
+    //    if (vertical >0 )
+    //    {
+    //        playerAnimator.SetBool("Jump", true);
+    //    }
+    //    else
+    //    {
+    //        playerAnimator.SetBool("Jump", false);
+    //    }
+
+    //    // Handle crouch animation
+    //    if (crouch)
+    //    {
+    //        isCrouching = true;
+    //        playerAnimator.SetBool("Crouch", true);
+    //    }
+    //    else
+    //    {
+    //        isCrouching = false;
+    //        playerAnimator.SetBool("Crouch", false);
+    //    }
+    //}
 
     public void pickUpKey()
     {
