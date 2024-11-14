@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
         float vertical = Input.GetAxisRaw("Jump");
         bool crouch = Input.GetKey(KeyCode.LeftControl); // Check for crouch key (Ctrl)
 
+
         // If the player is crouching, they cannot jump or move horizontally
         if (!crouch)
         {
@@ -200,6 +201,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Key is pickedup");
         ScoreController.Instance.IncreaseScore(10);
+        SoundController.Instance.Play(Sounds.KeyCollect);
         //scoreController.IncreaseScore(10);
     }
 

@@ -108,5 +108,6 @@ public enum Sounds
     PlayerMove,
     PlayerDeath,
     EnemyDeath,
-    BombBlast
+    BombBlast,
+    KeyCollect
 }

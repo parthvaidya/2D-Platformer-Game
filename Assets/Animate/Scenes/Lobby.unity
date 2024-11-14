@@ -6598,6 +6598,8 @@ MonoBehaviour:
     soundClip: {fileID: 8300000, guid: 31b2284e8ab3f244182080ca7da474b7, type: 3}
   - soundType: 5
     soundClip: {fileID: 8300000, guid: cb321e0e67455dd4b8293e3233354bf3, type: 3}
+  - soundType: 6
+    soundClip: {fileID: 8300000, guid: d76c71e98617e1c41a5cdc490eb1bee1, type: 3}
   soundEffect: {fileID: 1335726896}
   soundMusic: {fileID: 472320849}
   IsMute: 0
