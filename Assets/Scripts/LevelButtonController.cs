@@ -62,35 +62,4 @@ public class LevelButtonController : MonoBehaviour
 
 
 
-    //// Method for loading Level 1 (build index 1)
-    //public void LoadLevel1()
-    //{
-    //    SoundController.Instance.Play(Sounds.ButtonClick);
-    //    SceneManager.LoadScene(1); // Load Level 1 (build index 1)
-    //}
-
-    //// Method for loading Level 2 (build index 2)
-    //public void LoadLevel2()
-    //{
-    //    SoundController.Instance.Play(Sounds.ButtonClick);
-    //    SceneManager.LoadScene(2); // Load Level 2 (build index 2)
-    //}
-
-    //public void LoadLevel3()
-    //{
-    //    SoundController.Instance.Play(Sounds.ButtonClick);
-    //    SceneManager.LoadScene(3);
-    //}
-
-    //public void LoadLevel4()
-    //{
-    //    SoundController.Instance.Play(Sounds.ButtonClick);
-    //    SceneManager.LoadScene(4);
-    //}
-
-    //public void LoadLevel5()
-    //{
-    //    SoundController.Instance.Play(Sounds.ButtonClick);
-    //    SceneManager.LoadScene(5);
-    //}
 }

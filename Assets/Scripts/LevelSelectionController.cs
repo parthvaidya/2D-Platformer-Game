@@ -6,7 +6,7 @@ public class LevelSelection : MonoBehaviour
 {
     public GameObject levelSelectionPopup;
 
-    // Call this method when the "Choose Level" button is clicked
+  
     public void ShowLevelSelectionPopup()
     {
         levelSelectionPopup.SetActive(true); // Show the popup
