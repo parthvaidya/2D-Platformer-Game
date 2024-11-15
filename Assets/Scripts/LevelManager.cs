@@ -57,6 +57,18 @@ public class LevelManager : MonoBehaviour
     public void SetCurrentLevelComplete()
     {
         // Mark the current level as Completed
+        //string currentLevelName = SceneManager.GetActiveScene().name;
+        //SetLevelStatus(currentLevelName, LevelStatus.Completed);
+
+        //// Unlock the next level (if any)
+        //int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        //string nextLevelName = "Level" + nextLevelIndex;
+
+        //if (nextLevelIndex <= 5) // Assuming you have 5 levels
+        //{
+        //    SetLevelStatus(nextLevelName, LevelStatus.Unlocked);
+        //}
+
         string currentLevelName = SceneManager.GetActiveScene().name;
         SetLevelStatus(currentLevelName, LevelStatus.Completed);
 
@@ -64,9 +76,22 @@ public class LevelManager : MonoBehaviour
         int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
         string nextLevelName = "Level" + nextLevelIndex;
 
-        if (nextLevelIndex <= 5) // Assuming you have 5 levels
+        if (nextLevelIndex <= 6) // Assuming Level 1 to Level 5 are in scenes 1-5
         {
             SetLevelStatus(nextLevelName, LevelStatus.Unlocked);
+        }
+
+        // Check if the current level is the last level (Scene 5)
+        if (SceneManager.GetActiveScene().buildIndex == 5)
+        {
+            Debug.Log("Final level completed! Resetting player data...");
+
+            // Reset all levels to locked except Level 1
+            ResetPlayerData();
+            SetLevelStatus("Level1", LevelStatus.Unlocked);
+
+            // Optionally, return to the lobby
+            SceneManager.LoadScene(0); // Load the Lobby (Scene 0 in build settings)
         }
     }
 }
