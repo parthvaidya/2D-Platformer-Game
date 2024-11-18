@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     public void Update()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Jump");
+        bool vertical = Input.GetKeyDown(KeyCode.Space);
         bool crouch = Input.GetKey(KeyCode.LeftControl); // Check for crouch key (Ctrl)
 
 
@@ -47,26 +47,26 @@ public class PlayerController : MonoBehaviour
         PlayMovementAnimation(horizontal, vertical, crouch);
     }
 
-    private void MoveCharacter(float horizontal, float vertical)
+    private void MoveCharacter(float horizontal, bool vertical)
     {
         Vector3 position = transform.position;
         position.x = position.x + horizontal * speed * Time.deltaTime;
         transform.position = position;
 
         // Check if player is grounded before allowing jump
-        if (vertical > 0 && isGrounded)
+        if (vertical && isGrounded)
         {
             rb2d.AddForce(new Vector2(0f, jump), ForceMode2D.Impulse);
             jumpCounter = 0;  // Reset jump counter when grounded
         }
-        else if (vertical > 0 && jumpCounter < maxJumps)
+        else if (vertical && jumpCounter < maxJumps)
         {
             rb2d.AddForce(new Vector2(0f, jump), ForceMode2D.Impulse);
             jumpCounter++; // Increment jump counter on second jump
         }
     }
 
-    private void PlayMovementAnimation(float horizontal, float vertical, bool crouch)
+    private void PlayMovementAnimation(float horizontal, bool vertical, bool crouch)
     {
         playerAnimator.SetFloat("Speed", Mathf.Abs(horizontal));
 
@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
         }
         transform.localScale = scale;
 
-        if (vertical > 0)
+        if (vertical)
         {
             playerAnimator.SetBool("Jump", true);
         }
